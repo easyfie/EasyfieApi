@@ -1,0 +1,17 @@
+{
+    "name": "robi/easyfieapi",
+    "description": "easyfie api",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Touhidul Ahmed Robi",
+            "email": "touhid12310@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Test\\": "src/"
+        }
+    },
+    "require": {}
+}
