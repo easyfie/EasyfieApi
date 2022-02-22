@@ -2,6 +2,7 @@
     "name": "robi/easyfieapi",
     "description": "easyfie api",
     "type": "library",
+    "license": "MIT",
     "authors": [
         {
             "name": "Touhidul Ahmed Robi",
