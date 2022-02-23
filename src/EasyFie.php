@@ -10,8 +10,8 @@ class EasyFie
         if (!empty($user) and !empty($pass)) {
             // login method
             $usepass = array(
-                "username" => "fabian25_838",
-                "password" => "22207d489251acf031f7778e966b33e7bc865e76"
+                "username" => $user,
+                "password" => $pass
             );
 
             $ch = curl_init();
