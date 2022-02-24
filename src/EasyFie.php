@@ -5,6 +5,7 @@ namespace EasyFie;
 
 class EasyFie
 {
+
     public function getToken($user, $pass)
     {
         if (!empty($user) and !empty($pass)) {
@@ -134,7 +135,7 @@ class EasyFie
     public function generatedPageSingle($token, $slug)
     {
 
-        if (!empty($token) AND !empty($slug)) {
+        if (!empty($token) and !empty($slug)) {
 
             //generated-pages
             $ch = curl_init();
@@ -271,6 +272,30 @@ class EasyFie
 
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, "https://www.easyfie.com/rest-api/data-api/type/$type/search/$keyword/limit/$limit");
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'Authorization: Bearer ' . $token
+            ));
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            $data = curl_exec($ch);
+            curl_close($ch);
+
+            return json_decode($data);
+        } else {
+            return json_encode(['error' => 'one or more fields are missing or invalid.']);
+        }
+    }
+
+
+    public function Orders($token, $form, $orders)
+    {
+        if (
+            !empty($token) and
+            !empty($form) and
+            !empty($order)
+        ) {
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, "https://www.easyfie.com/rest-api/data-api/orders/$orders/form/$form");
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                 'Authorization: Bearer ' . $token
             ));
