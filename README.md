@@ -9,6 +9,7 @@ $easyfie = new \EasyFie\EasyFie();
 
 Api Usages...
 
+    $exmple_types = ['products', 'offer', 'service', 'shouts', 'article'];
 
     public function getToken($user, $pass)
 
