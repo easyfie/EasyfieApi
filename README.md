@@ -34,3 +34,5 @@ Api Usages...
     public function singleCategories($token, $category_id, $limit)
 
     public function Search($token, $type, $keyword, $limit)
+    
+    public function Orders($token, $postRequest)
