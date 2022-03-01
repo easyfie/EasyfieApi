@@ -290,8 +290,7 @@ class EasyFie
     {
         if (
             !empty($token) and
-            !empty($form) and
-            !empty($order)
+            !empty($postRequest)
         ) {
             $postRequest = http_build_query($postRequest);
 
