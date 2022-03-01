@@ -286,16 +286,18 @@ class EasyFie
     }
 
 
-    public function Orders($token, $form, $orders)
+    public function Orders($token, $postRequest)
     {
         if (
             !empty($token) and
             !empty($form) and
             !empty($order)
         ) {
+            $postRequest = http_build_query($postRequest);
 
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://www.easyfie.com/rest-api/data-api/orders/$orders/form/$form");
+            curl_setopt($ch, CURLOPT_URL, "https://www.easyfie.com/rest-api/data-api/orders");
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $postRequest);
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                 'Authorization: Bearer ' . $token
             ));
@@ -303,9 +305,5 @@ class EasyFie
             $data = curl_exec($ch);
             curl_close($ch);
 
-            return json_decode($data);
-        } else {
-            return json_encode(['error' => 'one or more fields are missing or invalid.']);
-        }
     }
 }
