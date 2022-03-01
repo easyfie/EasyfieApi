@@ -305,6 +305,8 @@ class EasyFie
             curl_close($ch);
             
             return json_decode($data);
+        } else {
+            return json_encode(['error' => 'one or more fields are missing or invalid.']);
         }
     }
 }
