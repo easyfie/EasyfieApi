@@ -301,12 +301,26 @@ class EasyFie
                 'Authorization: Bearer ' . $token
             ));
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            $data = curl_exec($ch);
+            $order = curl_exec($ch);
             curl_close($ch);
             
-            return json_decode($data);
+            return json_decode($order);
         } else {
             return json_encode(['error' => 'one or more fields are missing or invalid.']);
         }
+    }
+
+    public function notify()
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://www.easyfie.com/rest-api/data-api/notify");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Authorization: Bearer ' . $token
+        ));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $notify = curl_exec($ch);
+        curl_close($ch);
+        
+        return json_decode($notify);
     }
 }
