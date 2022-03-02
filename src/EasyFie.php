@@ -310,17 +310,23 @@ class EasyFie
         }
     }
 
-    public function notify()
+    public function notify($token)
     {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "https://www.easyfie.com/rest-api/data-api/notify");
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            'Authorization: Bearer ' . $token
-        ));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        $notify = curl_exec($ch);
-        curl_close($ch);
-        
-        return json_decode($notify);
+        if (
+            !empty($token)
+        ) {
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, "https://www.easyfie.com/rest-api/data-api/notify");
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'Authorization: Bearer ' . $token
+            ));
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            $notify = curl_exec($ch);
+            curl_close($ch);
+
+            return json_decode($notify);
+        else {
+            return json_encode(['error' => 'one or more fields are missing or invalid.']);
+        }
     }
 }
