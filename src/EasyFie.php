@@ -173,7 +173,7 @@ class EasyFie
     }
 
 
-    public function ProductsOrBlogs($token, $type, $limit, $order, $paginate)
+    public function ProductsOrBlogs($token, $type, $limit, $order, $paginate = 1)
     {
 
         $check_types = ['products', 'offer', 'service', 'shouts', 'article'];
@@ -183,7 +183,6 @@ class EasyFie
             !empty($type) and
             !empty($limit) and
             !empty($order) and
-            !empty($paginate) and
             in_array($type, $check_types) and
             $order == 'asc' or
             $order == 'desc'
@@ -233,18 +232,17 @@ class EasyFie
     }
 
 
-    public function singleCategories($token, $category_id, $limit, $paginate)
+    public function singleCategories($token, $category_id, $limit, $paginate = 1)
     {
 
         if (
             !empty($token) and
             !empty($category_id) and
-            !empty($limit) and
-            !empty($paginate)
+            !empty($limit) 
         ) {
 
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://www.easyfie.com/rest-api/data-api/categories/$category_id/limit/$limit/?page=$paginate");
+            curl_setopt($ch, CURLOPT_URL, "https://www.easyfie.com/rest-api/data-api/categories/$category_id/limit/$limit?page=$paginate");
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                 'Authorization: Bearer ' . $token
             ));
