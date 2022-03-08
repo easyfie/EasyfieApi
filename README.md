@@ -27,11 +27,11 @@ Api Usages...
 
     public function getMetaData($token)
 
-    public function ProductsOrBlogs($token, $type, $limit, $order)
+    public function ProductsOrBlogs($token, $type, $limit, $order $paginate)
 
     public function SingleData($token, $type, $id)
 
-    public function singleCategories($token, $category_id, $limit)
+    public function singleCategories($token, $category_id, $limit, $paginate)
 
     public function Search($token, $type, $keyword, $limit)
     
