@@ -37,6 +37,4 @@ Api Usages...
     
     public function Orders($token, $postRequest)
     
-    
-    public function Paginate($token, $postRequest)
-
+    public function paginate($page, $total, $limit)
