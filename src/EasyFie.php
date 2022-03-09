@@ -238,7 +238,7 @@ class EasyFie
         if (
             !empty($token) and
             !empty($category_id) and
-            !empty($limit) 
+            !empty($limit)
         ) {
 
             $ch = curl_init();
@@ -303,7 +303,7 @@ class EasyFie
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             $order = curl_exec($ch);
             curl_close($ch);
-            
+
             return json_decode($order);
         } else {
             return json_encode(['error' => 'one or more fields are missing or invalid.']);
@@ -325,8 +325,48 @@ class EasyFie
             curl_close($ch);
 
             return json_decode($notify);
-        }else {
+        } else {
             return json_encode(['error' => 'one or more fields are missing or invalid.']);
+        }
+    }
+
+    public function Paginate($page, $total, $limit)
+    {
+        if (
+            !empty($page) and
+            !empty($total) and
+            !empty($limit)
+        ) {
+            $links = 5;
+            $last       = ceil($total / $limit);
+            $start      = (($page - $links) > 0) ? $page - $links : 1;
+            $end        = (($page + $links) < $last) ? $page + $links : $last;
+
+            $html       = '<ul>';
+            $class      = ($page == 1) ? "disabled" : "";
+            $html       .= '<li class="' . $class . '"><a class="page-link" href="?page=' . ($page - 1) . '">&laquo;</a></li>';
+
+            if ($start > 1) {
+                $html   .= '<li><a class="page-link" href="?page=1">1</a></li>';
+                $html   .= '<li class="disabled"><span>...</span></li>';
+            }
+
+            for ($i = $start; $i <= $end; $i++) {
+                $class  = ($page == $i) ? "active" : "";
+                $html   .= '<li class="' . $class . '"><a class="page-link" href="?page=' . $i . '">' . $i . '</a></li>';
+            }
+
+            if ($end < $last) {
+                $html   .= '<li class="disabled"><span>...</span></li>';
+                $html   .= '<li><a class="page-link" href="?page=' . $last . '">' . $last . '</a></li>';
+            }
+
+            $class      = ($page == $last) ? "disabled" : "";
+            $html       .= '<li class="' . $class . '"><a class="page-link" href="?page=' . ($page + 1) . '">&raquo;</a></li>';
+
+            return $html       .= '</ul>';
+        }else{
+            return ['error' => 'Missing Variable'];
         }
     }
 }
