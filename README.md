@@ -36,3 +36,7 @@ Api Usages...
     public function Search($token, $type, $keyword, $limit)
     
     public function Orders($token, $postRequest)
+    
+    
+    public function Paginate($token, $postRequest)
+
