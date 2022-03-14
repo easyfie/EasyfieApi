@@ -15,30 +15,30 @@ Api Usages...
 
     $exmple_types = ['products', 'offer', 'service', 'shouts', 'article'];
 
-    public function getToken($user, $pass)
+    $easyfie->getToken($user, $pass)
 
-    public function Me($token)
+    $easyfie->Me($token)
 
-    public function WebData($token)
+    $easyfie->WebData($token)
 
-    public function getAllCategories($token)
+    $easyfie->getAllCategories($token)
 
-    public function getThemesColor($token) 
+    $easyfie->getThemesColor($token) 
 
-    public function generatedPages($token)
+    $easyfie->generatedPages($token)
 
-    public function generatedPageSingle($token, $slug)
+    $easyfie->generatedPageSingle($token, $slug)
 
-    public function getMetaData($token)
+    $easyfie->getMetaData($token)
 
-    public function ProductsOrBlogs($token, $type, $limit, $order $paginate)
+    $easyfie->ProductsOrBlogs($token, $type, $limit, $order $paginate)
 
-    public function SingleData($token, $type, $id)
+    $easyfie->SingleData($token, $type, $id)
 
-    public function singleCategories($token, $category_id, $limit, $paginate)
+    $easyfie->singleCategories($token, $category_id, $limit, $paginate)
 
-    public function Search($token, $type, $keyword, $limit)
+    $easyfie->Search($token, $type, $keyword, $limit)
     
-    public function Orders($token, $postRequest)
+    $easyfie->Orders($token, $postRequest)
     
-    public function paginate($page, $total, $limit)
+    $easyfie->paginate($page, $total, $limit)
