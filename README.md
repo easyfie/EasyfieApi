@@ -4,7 +4,8 @@
 composer require robi/easyfieapi
 
 
-Usages
+Usages: 
+
 require 'vendor/autoload.php';
 
 $easyfie = new \EasyFie\EasyFie();
