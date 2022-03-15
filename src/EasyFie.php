@@ -342,7 +342,7 @@ class EasyFie
             $start      = (($page - $links) > 0) ? $page - $links : 1;
             $end        = (($page + $links) < $last) ? $page + $links : $last;
 
-            $html       = '<ul>';
+            $html       = '<ul class="d-flex mx-auto">';
             $class      = ($page == 1) ? "disabled" : "";
             $html       .= '<li class="' . $class . '"><a class="page-link" href="?page=' . ($page - 1) . '">&laquo;</a></li>';
 
