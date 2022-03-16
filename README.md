@@ -16,21 +16,21 @@ Api Usages...
 
     $exmple_types = ['products', 'offer', 'service', 'shouts', 'article'];
 
-    $easyfie->getToken($user, $pass)
+    $token = $easyfie->getToken($user, $pass)
 
-    $easyfie->Me($token)
+    $me = $easyfie->Me($token)
 
-    $easyfie->WebData($token)
+    $web_data = $easyfie->WebData($token)
 
-    $easyfie->getAllCategories($token)
+    $categories = $easyfie->getAllCategories($token)
 
-    $easyfie->getThemesColor($token) 
+    $themes_colors = $easyfie->getThemesColor($token) 
 
-    $easyfie->generatedPages($token)
+    $generated_pages = $easyfie->generatedPages($token)
 
-    $easyfie->generatedPageSingle($token, $slug)
+    $generated_single = $easyfie->generatedPageSingle($token, $slug)
 
-    $easyfie->getMetaData($token)
+    $meta = $easyfie->getMetaData($token)
 
     $easyfie->ProductsOrBlogs($token, $type, $limit, $order $paginate)
 
