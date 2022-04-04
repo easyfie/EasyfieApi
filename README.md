@@ -42,7 +42,7 @@ Api Usages...
     
     $easyfie->Orders($token, $postRequest)
     
-    $easyfie->Portfolio($limit, $order, $paginate)
+    $easyfie->Portfolio($token, $limit, $order, $paginate)
    
     $easyfie->paginate($page, $total, $limit)
     
