@@ -384,7 +384,7 @@ class EasyFie
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             $portfolio = curl_exec($ch);
             curl_close($ch);
-            return json_decode($portfolio);
+            return json_decode($portfolio); 
         } else {
             return json_encode(['error' => 'one or more fields are missing or invalid.']);
         }
