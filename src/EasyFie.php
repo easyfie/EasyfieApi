@@ -18,6 +18,7 @@ class EasyFie
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, "https://www.easyfie.com/rest-api/login");
             curl_setopt($ch, CURLOPT_POSTFIELDS, $usepass);
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             $token = curl_exec($ch);
             curl_close($ch);
@@ -39,6 +40,7 @@ class EasyFie
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                 'Authorization: Bearer ' . $token
             ));
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             $me = curl_exec($ch);
             curl_close($ch);
@@ -59,6 +61,7 @@ class EasyFie
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                 'Authorization: Bearer ' . $token
             ));
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             $web_data = curl_exec($ch);
             curl_close($ch);
@@ -80,6 +83,7 @@ class EasyFie
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                 'Authorization: Bearer ' . $token
             ));
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             $categories = curl_exec($ch);
             curl_close($ch);
@@ -101,6 +105,7 @@ class EasyFie
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                 'Authorization: Bearer ' . $token
             ));
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             $themes_color = curl_exec($ch);
             curl_close($ch);
@@ -122,6 +127,7 @@ class EasyFie
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                 'Authorization: Bearer ' . $token
             ));
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             $generated_page = curl_exec($ch);
             curl_close($ch);
@@ -143,6 +149,7 @@ class EasyFie
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                 'Authorization: Bearer ' . $token
             ));
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             $single_page = curl_exec($ch);
             curl_close($ch);
@@ -163,6 +170,7 @@ class EasyFie
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                 'Authorization: Bearer ' . $token
             ));
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             $meta = curl_exec($ch);
             curl_close($ch);
@@ -193,6 +201,7 @@ class EasyFie
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                 'Authorization: Bearer ' . $token
             ));
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             $productsOrblogs = curl_exec($ch);
             curl_close($ch);
@@ -221,6 +230,7 @@ class EasyFie
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                 'Authorization: Bearer ' . $token
             ));
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             $data = curl_exec($ch);
             curl_close($ch);
@@ -246,6 +256,7 @@ class EasyFie
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                 'Authorization: Bearer ' . $token
             ));
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             $categories = curl_exec($ch);
             curl_close($ch);
@@ -275,6 +286,7 @@ class EasyFie
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                 'Authorization: Bearer ' . $token
             ));
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             $data = curl_exec($ch);
             curl_close($ch);
@@ -300,6 +312,7 @@ class EasyFie
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                 'Authorization: Bearer ' . $token
             ));
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             $order = curl_exec($ch);
             curl_close($ch);
@@ -320,6 +333,7 @@ class EasyFie
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                 'Authorization: Bearer ' . $token
             ));
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             $notify = curl_exec($ch);
             curl_close($ch);
@@ -365,30 +379,34 @@ class EasyFie
             $html       .= '<li class="' . $class . '"><a class="page-link" href="?page=' . ($page + 1) . '">&raquo;</a></li>';
 
             return $html       .= '</ul>';
-        }else{
+        } else {
             return ['error' => 'Missing Variable'];
         }
     }
-    
-    
+
+
     public function Portfolio($token, $limit, $order, $paginate)
     {
 
-        if (!empty($token) AND !empty($limit) AND !empty($order) AND !empty($paginate)) {
+        if (!empty($token) and !empty($limit) and !empty($order) and !empty($paginate)) {
             //view profile data
+
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, "https://www.easyfie.com/rest-api/data-api/portfolio/limit/$limit/order/$order/?page=$paginate");
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                 'Authorization: Bearer ' . $token
             ));
+
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             $portfolio = curl_exec($ch);
+
+            print_r($portfolio);
+            exit;
             curl_close($ch);
-            return json_decode($portfolio); 
+            return json_decode($portfolio);
         } else {
             return json_encode(['error' => 'one or more fields are missing or invalid.']);
         }
-        
     }
-    
 }
