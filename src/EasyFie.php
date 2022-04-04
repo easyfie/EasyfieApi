@@ -369,4 +369,26 @@ class EasyFie
             return ['error' => 'Missing Variable'];
         }
     }
+    
+    
+    public function Portfolio($token, $limit, $order, $paginate)
+    {
+
+        if (!empty($token) AND !empty($limit) AND !empty($order) AND !empty($paginate)) {
+            //view profile data
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, "https://www.easyfie.com/rest-api/data-api/portfolio/limit/$limit/order/$order/?page=$paginate");
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'Authorization: Bearer ' . $token
+            ));
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            $portfolio = curl_exec($ch);
+            curl_close($ch);
+            return json_decode($portfolio);
+        } else {
+            return json_encode(['error' => 'one or more fields are missing or invalid.']);
+        }
+        
+    }
+    
 }
