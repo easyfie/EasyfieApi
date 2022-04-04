@@ -401,8 +401,6 @@ class EasyFie
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             $portfolio = curl_exec($ch);
 
-            print_r($portfolio);
-            exit;
             curl_close($ch);
             return json_decode($portfolio);
         } else {
