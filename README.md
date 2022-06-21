@@ -3,16 +3,13 @@
 
 composer require robi/easyfieapi
 
+//call now function
 
-Usages: 
+Api Usages...
 
 require 'vendor/autoload.php';
 
 $easyfie = new \EasyFie\EasyFie();
-
-//call now function
-
-Api Usages...
 
     $exmple_types = ['products', 'offer', 'service', 'shouts', 'article'];
 
