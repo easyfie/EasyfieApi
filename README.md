@@ -39,9 +39,14 @@ $easyfie = new \EasyFie\EasyFie();
     
     $easyfie->Orders($token, $postRequest)
     
+    $easyfie->OrdersPayment($token, $order_id, $payment_status) // for update payment status
+
+    
     $easyfie->Portfolio($token, $limit, $order, $paginate)
    
     $easyfie->paginate($page, $total, $limit)
+    
+    
     
     
     
