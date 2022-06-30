@@ -433,4 +433,28 @@ class EasyFie
             return json_encode(['error' => 'one or more fields are missing or invalid.']);
         }
     }
+
+
+    public function plugin_checker($token, $plugin_id)
+    {
+        if (
+            !empty($token) and
+            !empty($plugin_id)
+        ) {
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, "https://www.easyfie.com/rest-api/data-api/plugin_checker/$plugin_id");
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'Authorization: Bearer ' . $token
+            ));
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            $data = curl_exec($ch);
+            curl_close($ch);
+
+            return json_decode($data);
+        } else {
+            return json_encode(['error' => 'one or more fields are missing or invalid.']);
+        }
+    }
 }
