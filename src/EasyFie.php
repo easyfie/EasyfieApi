@@ -16,7 +16,7 @@ class EasyFie
             );
 
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://www.easyfie.com/rest-api/login");
+            curl_setopt($ch, CURLOPT_URL, "https://api.easyfie.com/api/login");
             curl_setopt($ch, CURLOPT_POSTFIELDS, $usepass);
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -36,7 +36,7 @@ class EasyFie
 
             //view profile data
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://www.easyfie.com/rest-api/data-api/me");
+            curl_setopt($ch, CURLOPT_URL, "https://api.easyfie.com/api/me");
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                 'Authorization: Bearer ' . $token
             ));
@@ -57,7 +57,7 @@ class EasyFie
 
             //header data
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://www.easyfie.com/rest-api/data-api/web-data");
+            curl_setopt($ch, CURLOPT_URL, "https://api.easyfie.com/api/web-data");
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                 'Authorization: Bearer ' . $token
             ));
@@ -79,7 +79,7 @@ class EasyFie
 
             //category for menu
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://www.easyfie.com/rest-api/data-api/categories");
+            curl_setopt($ch, CURLOPT_URL, "https://api.easyfie.com/api/categories");
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                 'Authorization: Bearer ' . $token
             ));
@@ -101,7 +101,7 @@ class EasyFie
 
             //themes-color
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://www.easyfie.com/rest-api/data-api/themes-color");
+            curl_setopt($ch, CURLOPT_URL, "https://api.easyfie.com/api/themes-color");
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                 'Authorization: Bearer ' . $token
             ));
@@ -123,7 +123,7 @@ class EasyFie
 
             //generated-pages
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://www.easyfie.com/rest-api/data-api/generated-pages");
+            curl_setopt($ch, CURLOPT_URL, "https://api.easyfie.com/api/generated-pages");
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                 'Authorization: Bearer ' . $token
             ));
@@ -145,7 +145,7 @@ class EasyFie
 
             //generated-pages
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://www.easyfie.com/rest-api/data-api/generated-pages/$slug");
+            curl_setopt($ch, CURLOPT_URL, "https://api.easyfie.com/api/generated-pages/$slug");
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                 'Authorization: Bearer ' . $token
             ));
@@ -166,7 +166,7 @@ class EasyFie
 
             //meta-data
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://www.easyfie.com/rest-api/data-api/meta-data");
+            curl_setopt($ch, CURLOPT_URL, "https://api.easyfie.com/api/meta-data");
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                 'Authorization: Bearer ' . $token
             ));
@@ -196,8 +196,9 @@ class EasyFie
             $order == 'desc'
         ) {
 
+            
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://www.easyfie.com/rest-api/data-api/type/$type/limit/$limit/order/$order?page=$paginate");
+            curl_setopt($ch, CURLOPT_URL, "https://api.easyfie.com/api/type/$type/limit/$limit/order/$order?page=$paginate");
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                 'Authorization: Bearer ' . $token
             ));
@@ -226,7 +227,7 @@ class EasyFie
         ) {
 
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://www.easyfie.com/rest-api/data-api/type/$type/id/$id");
+            curl_setopt($ch, CURLOPT_URL, "https://api.easyfie.com/api/type/$type/id/$id");
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                 'Authorization: Bearer ' . $token
             ));
@@ -252,7 +253,7 @@ class EasyFie
         ) {
 
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://www.easyfie.com/rest-api/data-api/categories/$category_id/limit/$limit?page=$paginate");
+            curl_setopt($ch, CURLOPT_URL, "https://api.easyfie.com/api/categories/$category_id/limit/$limit?page=$paginate");
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                 'Authorization: Bearer ' . $token
             ));
@@ -282,7 +283,7 @@ class EasyFie
         ) {
 
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://www.easyfie.com/rest-api/data-api/type/$type/search/$keyword/limit/$limit");
+            curl_setopt($ch, CURLOPT_URL, "https://api.easyfie.com/api/type/$type/search/$keyword/limit/$limit");
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                 'Authorization: Bearer ' . $token
             ));
@@ -307,7 +308,7 @@ class EasyFie
             $postRequest = http_build_query($postRequest);
 
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://www.easyfie.com/rest-api/data-api/orders");
+            curl_setopt($ch, CURLOPT_URL, "https://api.easyfie.com/api/orders");
             curl_setopt($ch, CURLOPT_POSTFIELDS, $postRequest);
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                 'Authorization: Bearer ' . $token
@@ -322,9 +323,10 @@ class EasyFie
             return json_encode(['error' => 'one or more fields are missing or invalid.']);
         }
     }
-    
-    
-    public function OrdersPayment($token, $order_id, $payment_status)
+
+
+
+    public function OrdersPayment()
     {
         if (
             !empty($token) and
@@ -333,7 +335,7 @@ class EasyFie
         ) {
 
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://www.easyfie.com/rest-api/data-api/order-payment/order_id/$order_id/payment_status/$payment_status");
+            curl_setopt($ch, CURLOPT_URL, "https://api.easyfie.com/api/order-payment/order_id/$order_id/payment_status/$payment_status");
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                 'Authorization: Bearer ' . $token
             ));
@@ -347,15 +349,14 @@ class EasyFie
             return json_encode(['error' => 'one or more fields are missing or invalid.']);
         }
     }
-    
-    
+
     public function notify($token)
     {
         if (
             !empty($token)
         ) {
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://www.easyfie.com/rest-api/data-api/notify");
+            curl_setopt($ch, CURLOPT_URL, "https://api.easyfie.com/api/notify");
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                 'Authorization: Bearer ' . $token
             ));
@@ -418,7 +419,7 @@ class EasyFie
             //view profile data
 
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://www.easyfie.com/rest-api/data-api/portfolio/limit/$limit/order/$order/?page=$paginate");
+            curl_setopt($ch, CURLOPT_URL, "https://api.easyfie.com/api/portfolio/limit/$limit/order/$order/?page=$paginate");
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                 'Authorization: Bearer ' . $token
             ));
@@ -433,9 +434,9 @@ class EasyFie
             return json_encode(['error' => 'one or more fields are missing or invalid.']);
         }
     }
-
-
-    public function plugin_checker($token, $plugin_id)
+  
+  
+  	public function plugin_checker($token, $plugin_id)
     {
         if (
             !empty($token) and
@@ -443,7 +444,7 @@ class EasyFie
         ) {
 
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://www.easyfie.com/rest-api/data-api/plugin_checker/$plugin_id");
+            curl_setopt($ch, CURLOPT_URL, "https://api.easyfie.com/api/plugin_checker/$plugin_id");
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(
                 'Authorization: Bearer ' . $token
             ));
@@ -457,4 +458,5 @@ class EasyFie
             return json_encode(['error' => 'one or more fields are missing or invalid.']);
         }
     }
+
 }
