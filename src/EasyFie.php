@@ -2,461 +2,340 @@
 
 namespace EasyFie;
 
-
 class EasyFie
 {
+    private const API_BASE_URL = "https://api.easyfie.com/api";
 
+    /**
+     * Get API token using username and password.
+     *
+     * @param string $user
+     * @param string $pass
+     * @return mixed
+     */
     public function getToken($user, $pass)
     {
-        if (!empty($user) and !empty($pass)) {
-            // login method
-            $usepass = array(
-                "username" => $user,
-                "password" => $pass
-            );
-
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://api.easyfie.com/api/login");
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $usepass);
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            $token = curl_exec($ch);
-            curl_close($ch);
-
-            return json_decode($token);
-        } else {
-            return json_encode(['error' => 'one or more fields are missing or invalid.']);
+        if (empty($user) || empty($pass)) {
+            return $this->jsonError('Username and password are required.');
         }
+
+        $data = [
+            "username" => $user,
+            "password" => $pass
+        ];
+
+        return $this->makeRequest('POST', '/login', $data);
     }
 
+    /**
+     * Get user profile data.
+     *
+     * @param string $token
+     * @return mixed
+     */
     public function Me($token)
     {
-
-        if (!empty($token)) {
-
-            //view profile data
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://api.easyfie.com/api/me");
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                'Authorization: Bearer ' . $token
-            ));
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            $me = curl_exec($ch);
-            curl_close($ch);
-            return json_decode($me);
-        } else {
-            return json_encode(['error' => 'one or more fields are missing or invalid.']);
-        }
+        return $this->makeRequest('GET', '/me', [], $token);
     }
 
-
+    /**
+     * Get web data.
+     *
+     * @param string $token
+     * @return mixed
+     */
     public function WebData($token)
     {
-        if (!empty($token)) {
-
-            //header data
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://api.easyfie.com/api/web-data");
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                'Authorization: Bearer ' . $token
-            ));
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            $web_data = curl_exec($ch);
-            curl_close($ch);
-
-            return json_decode($web_data);
-        } else {
-            return json_encode(['error' => 'one or more fields are missing or invalid.']);
-        }
+        return $this->makeRequest('GET', '/web-data', [], $token);
     }
 
-
+    /**
+     * Get all categories.
+     *
+     * @param string $token
+     * @return mixed
+     */
     public function getAllCategories($token)
     {
-        if (!empty($token)) {
-
-            //category for menu
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://api.easyfie.com/api/categories");
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                'Authorization: Bearer ' . $token
-            ));
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            $categories = curl_exec($ch);
-            curl_close($ch);
-            return json_decode($categories);
-        } else {
-            return json_encode(['error' => 'one or more fields are missing or invalid.']);
-        }
+        return $this->makeRequest('GET', '/categories', [], $token);
     }
 
-
+    /**
+     * Get themes color.
+     *
+     * @param string $token
+     * @return mixed
+     */
     public function getThemesColor($token)
     {
-
-        if (!empty($token)) {
-
-            //themes-color
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://api.easyfie.com/api/themes-color");
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                'Authorization: Bearer ' . $token
-            ));
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            $themes_color = curl_exec($ch);
-            curl_close($ch);
-            return json_decode($themes_color);
-        } else {
-            return json_encode(['error' => 'one or more fields are missing or invalid.']);
-        }
+        return $this->makeRequest('GET', '/themes-color', [], $token);
     }
 
-
+    /**
+     * Get generated pages.
+     *
+     * @param string $token
+     * @return mixed
+     */
     public function generatedPages($token)
     {
-
-        if (!empty($token)) {
-
-            //generated-pages
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://api.easyfie.com/api/generated-pages");
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                'Authorization: Bearer ' . $token
-            ));
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            $generated_page = curl_exec($ch);
-            curl_close($ch);
-            return json_decode($generated_page);
-        } else {
-            return json_encode(['error' => 'one or more fields are missing or invalid.']);
-        }
+        return $this->makeRequest('GET', '/generated-pages', [], $token);
     }
 
-
+    /**
+     * Get a single generated page by slug.
+     *
+     * @param string $token
+     * @param string $slug
+     * @return mixed
+     */
     public function generatedPageSingle($token, $slug)
     {
-
-        if (!empty($token) and !empty($slug)) {
-
-            //generated-pages
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://api.easyfie.com/api/generated-pages/$slug");
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                'Authorization: Bearer ' . $token
-            ));
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            $single_page = curl_exec($ch);
-            curl_close($ch);
-            return json_decode($single_page);
-        } else {
-            return json_encode(['error' => 'one or more fields are missing or invalid.']);
-        }
+        return $this->makeRequest('GET', "/generated-pages/$slug", [], $token);
     }
 
-
+    /**
+     * Get meta data.
+     *
+     * @param string $token
+     * @return mixed
+     */
     public function getMetaData($token)
     {
-        if (!empty($token)) {
-
-            //meta-data
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://api.easyfie.com/api/meta-data");
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                'Authorization: Bearer ' . $token
-            ));
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            $meta = curl_exec($ch);
-            curl_close($ch);
-            return json_decode($meta);
-        } else {
-            return json_encode(['error' => 'one or more fields are missing or invalid.']);
-        }
+        return $this->makeRequest('GET', '/meta-data', [], $token);
     }
 
-
+    /**
+     * Get products or blogs.
+     *
+     * @param string $token
+     * @param string $type
+     * @param int $limit
+     * @param string $order
+     * @param int $paginate
+     * @return mixed
+     */
     public function ProductsOrBlogs($token, $type, $limit, $order, $paginate = 1)
     {
-
-        $check_types = ['products', 'offer', 'service', 'shouts', 'article'];
-
-        if (
-            !empty($token) and
-            !empty($type) and
-            !empty($limit) and
-            !empty($order) and
-            in_array($type, $check_types) and
-            $order == 'asc' or
-            $order == 'desc'
-        ) {
-
-            
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://api.easyfie.com/api/type/$type/limit/$limit/order/$order?page=$paginate");
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                'Authorization: Bearer ' . $token
-            ));
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            $productsOrblogs = curl_exec($ch);
-            curl_close($ch);
-
-            return json_decode($productsOrblogs);
-        } else {
-            return json_encode(['error' => 'one or more fields are missing or invalid.']);
+        $validTypes = ['products', 'offer', 'service', 'shouts', 'article'];
+        if (!in_array($type, $validTypes) || !in_array($order, ['asc', 'desc'])) {
+            return $this->jsonError('Invalid type or order.');
         }
+        return $this->makeRequest('GET', "/type/$type/limit/$limit/order/$order?page=$paginate", [], $token);
     }
 
-
+    /**
+     * Get single data by type and ID.
+     *
+     * @param string $token
+     * @param string $type
+     * @param int $id
+     * @return mixed
+     */
     public function SingleData($token, $type, $id)
     {
-
-        $check_types = ['products', 'offer', 'service', 'shouts', 'article'];
-
-        if (
-            !empty($token) and
-            !empty($type) and
-            !empty($id) and
-            in_array($type, $check_types)
-        ) {
-
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://api.easyfie.com/api/type/$type/id/$id");
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                'Authorization: Bearer ' . $token
-            ));
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            $data = curl_exec($ch);
-            curl_close($ch);
-
-            return json_decode($data);
-        } else {
-            return json_encode(['error' => 'one or more fields are missing or invalid.']);
+        $validTypes = ['products', 'offer', 'service', 'shouts', 'article'];
+        if (!in_array($type, $validTypes)) {
+            return $this->jsonError('Invalid type.');
         }
+
+        return $this->makeRequest('GET', "/type/$type/id/$id", [], $token);
     }
 
-
+    /**
+     * Get single category data.
+     *
+     * @param string $token
+     * @param int $category_id
+     * @param int $limit
+     * @param int $paginate
+     * @return mixed
+     */
     public function singleCategories($token, $category_id, $limit, $paginate = 1)
     {
-
-        if (
-            !empty($token) and
-            !empty($category_id) and
-            !empty($limit)
-        ) {
-
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://api.easyfie.com/api/categories/$category_id/limit/$limit?page=$paginate");
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                'Authorization: Bearer ' . $token
-            ));
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            $categories = curl_exec($ch);
-            curl_close($ch);
-
-            return json_decode($categories);
-        } else {
-            return json_encode(['error' => 'one or more fields are missing or invalid.']);
-        }
+        return $this->makeRequest('GET', "/categories/$category_id/limit/$limit?page=$paginate", [], $token);
     }
 
-
+    /**
+     * Search data by type and keyword.
+     *
+     * @param string $token
+     * @param string $type
+     * @param string $keyword
+     * @param int $limit
+     * @return mixed
+     */
     public function Search($token, $type, $keyword, $limit)
     {
-
-        $check_types = ['products', 'offer', 'service', 'shouts', 'article'];
-
-        if (
-            !empty($token) and
-            !empty($type) and
-            !empty($keyword) and
-            !empty($limit) and
-            in_array($type, $check_types)
-        ) {
-
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://api.easyfie.com/api/type/$type/search/$keyword/limit/$limit");
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                'Authorization: Bearer ' . $token
-            ));
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            $data = curl_exec($ch);
-            curl_close($ch);
-
-            return json_decode($data);
-        } else {
-            return json_encode(['error' => 'one or more fields are missing or invalid.']);
+        $validTypes = ['products', 'offer', 'service', 'shouts', 'article'];
+        if (!in_array($type, $validTypes)) {
+            return $this->jsonError('Invalid type.');
         }
+
+        return $this->makeRequest('GET', "/type/$type/search/$keyword/limit/$limit", [], $token);
     }
 
-
+    /**
+     * Place an order.
+     *
+     * @param string $token
+     * @param array $postRequest
+     * @return mixed
+     */
     public function Orders($token, $postRequest)
     {
-        if (
-            !empty($token) and
-            !empty($postRequest)
-        ) {
-            $postRequest = http_build_query($postRequest);
-
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://api.easyfie.com/api/orders");
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $postRequest);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                'Authorization: Bearer ' . $token
-            ));
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            $order = curl_exec($ch);
-            curl_close($ch);
-
-            return json_decode($order);
-        } else {
-            return json_encode(['error' => 'one or more fields are missing or invalid.']);
-        }
+        return $this->makeRequest('POST', '/orders', $postRequest, $token);
     }
 
-
-
-    public function OrdersPayment()
+    /**
+     * Update order payment status.
+     *
+     * @param string $token
+     * @param int $order_id
+     * @param string $payment_status
+     * @return mixed
+     */
+    public function OrdersPayment($token, $order_id, $payment_status)
     {
-        if (
-            !empty($token) and
-            !empty($order_id) and
-            !empty($payment_status)
-        ) {
-
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://api.easyfie.com/api/order-payment/order_id/$order_id/payment_status/$payment_status");
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                'Authorization: Bearer ' . $token
-            ));
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            $data = curl_exec($ch);
-            curl_close($ch);
-
-            return json_decode($data);
-        } else {
-            return json_encode(['error' => 'one or more fields are missing or invalid.']);
-        }
+        return $this->makeRequest('GET', "/order-payment/order_id/$order_id/payment_status/$payment_status", [], $token);
     }
 
+    /**
+     * Get notifications.
+     *
+     * @param string $token
+     * @return mixed
+     */
     public function notify($token)
     {
-        if (
-            !empty($token)
-        ) {
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://api.easyfie.com/api/notify");
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                'Authorization: Bearer ' . $token
-            ));
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            $notify = curl_exec($ch);
-            curl_close($ch);
-
-            return json_decode($notify);
-        } else {
-            return json_encode(['error' => 'one or more fields are missing or invalid.']);
-        }
+        return $this->makeRequest('GET', '/notify', [], $token);
     }
 
+    /**
+     * Generate pagination HTML.
+     *
+     * @param int $page
+     * @param int $total
+     * @param int $limit
+     * @return string
+     */
     public function Paginate($page, $total, $limit)
     {
-        if (
-            !empty($page) and
-            !empty($total) and
-            !empty($limit)
-        ) {
-            $links = 5;
-            $last       = ceil($total / $limit);
-            $start      = (($page - $links) > 0) ? $page - $links : 1;
-            $end        = (($page + $links) < $last) ? $page + $links : $last;
-
-            $html       = '<ul class="d-flex mx-auto">';
-            $class      = ($page == 1) ? "disabled" : "";
-            $html       .= '<li class="' . $class . '"><a class="page-link" href="?page=' . ($page - 1) . '">&laquo;</a></li>';
-
-            if ($start > 1) {
-                $html   .= '<li><a class="page-link" href="?page=1">1</a></li>';
-                $html   .= '<li class="disabled"><span>...</span></li>';
-            }
-
-            for ($i = $start; $i <= $end; $i++) {
-                $class  = ($page == $i) ? "active" : "";
-                $html   .= '<li class="' . $class . '"><a class="page-link" href="?page=' . $i . '">' . $i . '</a></li>';
-            }
-
-            if ($end < $last) {
-                $html   .= '<li class="disabled"><span>...</span></li>';
-                $html   .= '<li><a class="page-link" href="?page=' . $last . '">' . $last . '</a></li>';
-            }
-
-            $class      = ($page == $last) ? "disabled" : "";
-            $html       .= '<li class="' . $class . '"><a class="page-link" href="?page=' . ($page + 1) . '">&raquo;</a></li>';
-
-            return $html       .= '</ul>';
-        } else {
-            return ['error' => 'Missing Variable'];
+        if (empty($page) || empty($total) || empty($limit)) {
+            return json_encode(['error' => 'Missing variables.']);
         }
+
+        $links = 5;
+        $last = ceil($total / $limit);
+        $start = max(1, $page - $links);
+        $end = min($last, $page + $links);
+
+        $html = '<ul class="d-flex mx-auto">';
+        $html .= $this->paginationLink($page > 1, $page - 1, '&laquo;');
+
+        if ($start > 1) {
+            $html .= $this->paginationLink(true, 1, '1');
+            $html .= '<li class="disabled"><span>...</span></li>';
+        }
+
+        for ($i = $start; $i <= $end; $i++) {
+            $html .= $this->paginationLink($page != $i, $i, $i);
+        }
+
+        if ($end < $last) {
+            $html .= '<li class="disabled"><span>...</span></li>';
+            $html .= $this->paginationLink(true, $last, $last);
+        }
+
+        $html .= $this->paginationLink($page < $last, $page + 1, '&raquo;');
+        $html .= '</ul>';
+
+        return $html;
     }
 
-
+    /**
+     * Get portfolio data.
+     *
+     * @param string $token
+     * @param int $limit
+     * @param string $order
+     * @param int $paginate
+     * @return mixed
+     */
     public function Portfolio($token, $limit, $order, $paginate)
     {
-
-        if (!empty($token) and !empty($limit) and !empty($order) and !empty($paginate)) {
-            //view profile data
-
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://api.easyfie.com/api/portfolio/limit/$limit/order/$order/?page=$paginate");
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                'Authorization: Bearer ' . $token
-            ));
-
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            $portfolio = curl_exec($ch);
-
-            curl_close($ch);
-            return json_decode($portfolio);
-        } else {
-            return json_encode(['error' => 'one or more fields are missing or invalid.']);
-        }
+        return $this->makeRequest('GET', "/portfolio/limit/$limit/order/$order/?page=$paginate", [], $token);
     }
-  
-  
-  	public function plugin_checker($token, $plugin_id)
+
+    /**
+     * Check plugin status.
+     *
+     * @param string $token
+     * @param int $plugin_id
+     * @return mixed
+     */
+    public function plugin_checker($token, $plugin_id)
     {
-        if (
-            !empty($token) and
-            !empty($plugin_id)
-        ) {
-
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://api.easyfie.com/api/plugin_checker/$plugin_id");
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                'Authorization: Bearer ' . $token
-            ));
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            $data = curl_exec($ch);
-            curl_close($ch);
-
-            return json_decode($data);
-        } else {
-            return json_encode(['error' => 'one or more fields are missing or invalid.']);
-        }
+        return $this->makeRequest('GET', "/plugin_checker/$plugin_id", [], $token);
     }
 
+    /**
+     * Make a request to the API.
+     *
+     * @param string $method
+     * @param string $endpoint
+     * @param array $data
+     * @param string|null $token
+     * @return mixed
+     */
+    private function makeRequest($method, $endpoint, $data = [], $token = null)
+    {
+        $url = self::API_BASE_URL . $endpoint;
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+
+        if ($method === 'POST') {
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        }
+
+        if ($token) {
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                'Authorization: Bearer ' . $token
+            ]);
+        }
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        return json_decode($response);
+    }
+
+    /**
+     * Generate a JSON error response.
+     *
+     * @param string $message
+     * @return string
+     */
+    private function jsonError($message)
+    {
+        return json_encode(['error' => $message]);
+    }
+
+    /**
+     * Generate a pagination link.
+     *
+     * @param bool $enabled
+     * @param int $page
+     * @param string $label
+     * @return string
+     */
+    private function paginationLink($enabled, $page, $label)
+    {
+        $class = $enabled ? '' : 'disabled';
+        return "<li class='$class'><a class='page-link' href='?page=$page'>$label</a></li>";
+    }
 }
