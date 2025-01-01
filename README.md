@@ -1,44 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EasyFie API PHP Client Documentation</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 20px;
-        }
-        h1, h2, h3 {
-            color: #333;
-        }
-        code {
-            background: #f4f4f4;
-            padding: 2px 5px;
-            border-radius: 3px;
-            font-family: monospace;
-        }
-        pre {
-            background: #f4f4f4;
-            padding: 10px;
-            border-radius: 5px;
-            overflow-x: auto;
-        }
-        ul {
-            list-style-type: disc;
-            margin-left: 20px;
-        }
-        .note {
-            background: #e7f3fe;
-            padding: 10px;
-            border-left: 4px solid #2196F3;
-            margin: 10px 0;
-        }
-    </style>
-</head>
-<body>
-
     <h1>EasyFie API PHP Client Documentation</h1>
     <p>The EasyFie API PHP Client is a simple and easy-to-use library for interacting with the EasyFie API. This library provides methods to authenticate, retrieve user data, manage orders, and more.</p>
 
@@ -145,6 +104,3 @@ if (isset($error->error)) {
 
     <h2>Support</h2>
     <p>For support, please open an issue on GitHub or contact the maintainer.</p>
-
-</body>
-</html>
