@@ -2,9 +2,16 @@
 
 namespace EasyFie;
 
+use GuzzleHttp\Client;
+
 class EasyFie
 {
     private const API_BASE_URL = "https://api.easyfie.com/api";
+    private $client;
+
+    public function __construct() {
+        $this->client = new Client();
+    }
 
     /**
      * Get API token using username and password.
@@ -291,27 +298,19 @@ class EasyFie
     private function makeRequest($method, $endpoint, $data = [], $token = null)
     {
         $url = self::API_BASE_URL . $endpoint;
-        $ch = curl_init();
 
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-
-        if ($method === 'POST') {
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-        }
+        $options = [
+            'form_params' => $data,
+            'headers' => []
+        ];
 
         if ($token) {
-            curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                'Authorization: Bearer ' . $token
-            ]);
+            $options['headers']['Authorization'] = 'Bearer ' . $token;
         }
 
-        $response = curl_exec($ch);
-        curl_close($ch);
+        $response = $this->client->request($method, $url, $options);
 
-        return json_decode($response);
+        return json_decode($response->getBody());
     }
 
     /**
