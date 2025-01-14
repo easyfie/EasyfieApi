@@ -14,5 +14,7 @@
             "EasyFie\\": "src/"
         }
     },
-    "require": {}
+    "require": {
+        "guzzlehttp/guzzle": "*"
+    }
 }
