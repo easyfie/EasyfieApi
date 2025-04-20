@@ -128,7 +128,7 @@ class EasyFie
         if (!in_array($type, $validTypes) || !in_array($order, ['asc', 'desc'])) {
             return $this->jsonError('Invalid type or order.');
         }
-        return $this->makeRequest('GET', "/type/$type/featured/limit/$limit/order/$order?page=$paginate", [], $token);
+        return $this->makeRequest('GET', "/type/$type/limit/$limit/order/$order?page=$paginate", [], $token);
     }
 
     /**
@@ -147,7 +147,7 @@ class EasyFie
         if (!in_array($type, $validTypes) || !in_array($order, ['asc', 'desc'])) {
             return $this->jsonError('Invalid type or order.');
         }
-        return $this->makeRequest('GET', "/type/$type/limit/$limit/order/$order?page=$paginate", [], $token);
+        return $this->makeRequest('GET', "/type/$type/featured/limit/$limit/order/$order?page=$paginate", [], $token);
     }
 
     /**
