@@ -175,18 +175,42 @@ class EasyFie
      *
      * @param string $token
      * @param string $type
+     * @param int $limit
+     * @param string $order
+     * @param int $paginate
+     * @return mixed
+     */
+    public function getPopular($token, $type, $limit, $order, $paginate = 1)
+    {
+        $validTypes = ['products', 'offer', 'service', 'shouts', 'article'];
+        if (!in_array($type, $validTypes) || !in_array($order, ['asc', 'desc'])) {
+            return $this->jsonError('Invalid type or order.');
+        }
+
+        return $this->makeRequest('GET', "/type/$type/limit/$limit/order/$order?page=$paginate", [], $token);
+    }
+
+
+    
+    /**
+     * Update popular visit count.
+     *
+     * @param string $token
+     * @param string $type
      * @param int $id
      * @return mixed
      */
-    public function Popular($token, $type, $id)
+    public function popularVisitUpdate($token, $type, $id)
     {
         $validTypes = ['products', 'offer', 'service', 'shouts', 'article'];
         if (!in_array($type, $validTypes)) {
             return $this->jsonError('Invalid type.');
         }
 
-        return $this->makeRequest('GET', "popular/type/$type/id/$id", [], $token);
+        return $this->makeRequest('GET', "popular-update/type/$type/id/$id", [], $token);
     }
+
+
 
     /**
      * Get single category data.
