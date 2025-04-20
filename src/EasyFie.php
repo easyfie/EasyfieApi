@@ -150,6 +150,7 @@ class EasyFie
         return $this->makeRequest('GET', "/type/$type/featured/limit/$limit/order/$order?page=$paginate", [], $token);
     }
 
+
     /**
      * Get single data by type and ID.
      *
@@ -166,6 +167,25 @@ class EasyFie
         }
 
         return $this->makeRequest('GET', "/type/$type/id/$id", [], $token);
+    }
+
+    
+    /**
+     * Get single data by type and ID.
+     *
+     * @param string $token
+     * @param string $type
+     * @param int $id
+     * @return mixed
+     */
+    public function Popular($token, $type, $id)
+    {
+        $validTypes = ['products', 'offer', 'service', 'shouts', 'article'];
+        if (!in_array($type, $validTypes)) {
+            return $this->jsonError('Invalid type.');
+        }
+
+        return $this->makeRequest('GET', "popular/type/$type/id/$id", [], $token);
     }
 
     /**
