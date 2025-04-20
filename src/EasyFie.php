@@ -132,6 +132,25 @@ class EasyFie
     }
 
     /**
+     * Get products or blogs featured.
+     *
+     * @param string $token
+     * @param string $type
+     * @param int $limit
+     * @param string $order
+     * @param int $paginate
+     * @return mixed
+     */
+    public function ProductsOrBlogsFeatured($token, $type, $limit, $order, $paginate = 1)
+    {
+        $validTypes = ['products', 'offer', 'service', 'shouts', 'article'];
+        if (!in_array($type, $validTypes) || !in_array($order, ['asc', 'desc'])) {
+            return $this->jsonError('Invalid type or order.');
+        }
+        return $this->makeRequest('GET', "/type/$type/limit/$limit/order/$order?page=$paginate", [], $token);
+    }
+
+    /**
      * Get single data by type and ID.
      *
      * @param string $token
