@@ -187,7 +187,7 @@ class EasyFie
             return $this->jsonError('Invalid type or order.');
         }
 
-        return $this->makeRequest('GET', "get-popular/type/$type/limit/$limit/order/$order?page=$paginate", [], $token);
+        return $this->makeRequest('GET', "/get-popular/type/$type/limit/$limit/order/$order?page=$paginate", [], $token);
     }
 
 
@@ -207,7 +207,7 @@ class EasyFie
             return $this->jsonError('Invalid type.');
         }
 
-        return $this->makeRequest('GET', "popular-update/type/$type/id/$id", [], $token);
+        return $this->makeRequest('GET', "/popular-update/type/$type/id/$id", [], $token);
     }
 
 
