@@ -159,14 +159,14 @@ class EasyFie
      * @param int $id
      * @return mixed
      */
-    public function SingleData($token, $type, $id)
+    public function SingleData($token, $type, $slug)
     {
         $validTypes = ['products', 'offer', 'service', 'shouts', 'article'];
         if (!in_array($type, $validTypes)) {
             return $this->jsonError('Invalid type.');
         }
 
-        return $this->makeRequest('GET', "/type/$type/id/$id", [], $token);
+        return $this->makeRequest('GET', "/type/$type/slug/$slug", [], $token);
     }
 
     
