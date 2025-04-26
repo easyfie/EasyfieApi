@@ -9,7 +9,8 @@ class EasyFie
     private const API_BASE_URL = "https://api.easyfie.com/api";
     private $client;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->client = new Client();
     }
 
@@ -169,7 +170,7 @@ class EasyFie
         return $this->makeRequest('GET', "/type/$type/slug/$slug", [], $token);
     }
 
-    
+
     /**
      * Get single data by type and ID.
      *
@@ -191,7 +192,7 @@ class EasyFie
     }
 
 
-    
+
     /**
      * Update popular visit count.
      *
@@ -226,9 +227,24 @@ class EasyFie
         return $this->makeRequest('GET', "/categories/$category_id/limit/$limit?page=$paginate", [], $token);
     }
 
+
+
+
+    /**
+     * Subscribe to newsletter.
+
+     * @param string $token
+     * @param string $email
+     * @return mixed
+     */
+    public function Subscribe($token, $email)
+    {
+        return $this->makeRequest('GET', "/subscribe/email/$email", [], $token);
+    }
+    
     /**
      * Search data by type and keyword.
-     *
+
      * @param string $token
      * @param string $type
      * @param string $keyword
