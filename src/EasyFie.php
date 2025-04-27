@@ -224,7 +224,7 @@ class EasyFie
      */
     public function singleCategories($token, $type, $slug, $limit, $order, $paginate = 1)
     {
-        return $this->makeRequest('GET', "type/$type/categories/$slug/limit/$limit/order/$order?page=$paginate", [], $token);
+        return $this->makeRequest('GET', "/type/$type/categories/$slug/limit/$limit/order/$order?page=$paginate", [], $token);
     }
 
 
