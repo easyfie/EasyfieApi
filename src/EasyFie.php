@@ -57,16 +57,6 @@ class EasyFie
         return $this->makeRequest('GET', '/web-data', [], $token);
     }
 
-    /**
-     * Get all categories.
-     *
-     * @param string $token
-     * @return mixed
-     */
-    public function getAllCategories($token)
-    {
-        return $this->makeRequest('GET', '/categories', [], $token);
-    }
 
     /**
      * Get themes color.
@@ -212,6 +202,16 @@ class EasyFie
     }
 
 
+    /**
+     * Get all categories.
+     *
+     * @param string $token
+     * @return mixed
+     */
+    public function getAllCategories($token)
+    {
+        return $this->makeRequest('GET', '/categories', [], $token);
+    }
 
     /**
      * Get single category data.
@@ -222,12 +222,10 @@ class EasyFie
      * @param int $paginate
      * @return mixed
      */
-    public function singleCategories($token, $category_id, $limit, $paginate = 1)
+    public function singleCategories($token, $type, $slug, $limit, $order, $paginate = 1)
     {
-        return $this->makeRequest('GET', "/categories/$category_id/limit/$limit?page=$paginate", [], $token);
+        return $this->makeRequest('GET', "type/$type/categories/$slug/limit/$limit/order/$order?page=$paginate", [], $token);
     }
-
-
 
 
     /**
