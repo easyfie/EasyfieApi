@@ -184,25 +184,6 @@ class EasyFie
 
 
     /**
-     * Update popular visit count.
-     *
-     * @param string $token
-     * @param string $type
-     * @param int $id
-     * @return mixed
-     */
-    public function popularVisitUpdate($token, $type, $id)
-    {
-        $validTypes = ['products', 'offer', 'service', 'shouts', 'article'];
-        if (!in_array($type, $validTypes)) {
-            return $this->jsonError('Invalid type.');
-        }
-
-        return $this->makeRequest('GET', "/popular-update/type/$type/id/$id", [], $token);
-    }
-
-
-    /**
      * Get all categories.
      *
      * @param string $token
