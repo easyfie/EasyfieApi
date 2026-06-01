@@ -184,6 +184,25 @@ class EasyFie
 
 
     /**
+     * Update popular visit count.
+     *
+     * @param string $token
+     * @param string $type
+     * @param int $id
+     * @return mixed
+     */
+    public function popularVisitUpdate($token, $type, $id)
+    {
+        $validTypes = ['products', 'offer', 'service', 'shouts', 'article'];
+        if (!in_array($type, $validTypes)) {
+            return $this->jsonError('Invalid type.');
+        }
+
+        return $this->makeRequest('GET', "/popular-update/type/$type/id/$id", [], $token);
+    }
+
+
+    /**
      * Get all categories.
      *
      * @param string $token
@@ -327,9 +346,9 @@ class EasyFie
      * @param int $paginate
      * @return mixed
      */
-    public function Portfolio($token, $limit, $order, $paginate)
+    public function Portfolio($token, $limit, $order, $paginate = 1)
     {
-        return $this->makeRequest('GET', "/portfolio/limit/$limit/order/$order/?page=$paginate", [], $token);
+        return $this->makeRequest('GET', "/portfolio/limit/$limit/order/$order?page=$paginate", [], $token);
     }
 
     /**
@@ -359,16 +378,32 @@ class EasyFie
 
         $options = [
             'form_params' => $data,
-            'headers' => []
+            'headers' => [],
+            'http_errors' => false,
+            'connect_timeout' => 10,
+            'timeout' => 30,
         ];
 
         if ($token) {
             $options['headers']['Authorization'] = 'Bearer ' . $token;
         }
 
-        $response = $this->client->request($method, $url, $options);
+        try {
+            $response = $this->client->request($method, $url, $options);
+            $body = (string) $response->getBody();
+            $decoded = json_decode($body);
 
-        return json_decode($response->getBody());
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                return (object) [
+                    'error' => 'Invalid response from API.',
+                    'status' => $response->getStatusCode(),
+                ];
+            }
+
+            return $decoded;
+        } catch (\Throwable $e) {
+            return (object) ['error' => $e->getMessage()];
+        }
     }
 
     /**
